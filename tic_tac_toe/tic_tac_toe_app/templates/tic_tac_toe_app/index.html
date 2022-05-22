@@ -1,0 +1,77 @@
+{% extends "tic_tac_toe_app/base.html" %}
+
+{% block lobby %}
+    {% if lobby %}
+        <div class="lobby">
+            <h2>Decide Your Options:</h2>
+            <ul>
+                <li><a href="{% url 'tic_tac_toe_app:myself' %}">Play with Myself (Got no friends).</a></li>
+                <li><a href="{% url 'tic_tac_toe_app:computer' %}">Play with computer (This pc is the only girl I got).</a></li>
+                <li class="friendlyPlay"><a>Play with a friend (Got one friend) </a>
+                    <div>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <br>
+                            <div class='form-control'>
+                                <label for="room">Room id</label>
+                                <input id="room" type="text" name="room_id" required />
+                            </div>
+                            <br>
+                            <input type="submit" class="button" value="Start Game" />
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block option %}
+    {% if game %}
+        <h2>Playing with <span id="playingAgainst">{{game}}</span></h2>
+    {% endif %}
+    {% if key %}
+        <h6>INVITE LINK: </h6>
+        <h3>Room id: <span id="roomId">{{key}}</span></h3>
+    {% endif %}
+{% endblock %}
+
+{% block game %}
+    {% if game%}
+        <div class="play">
+            <h3 id="char"></h3>
+            <h2>START</h2>
+            
+            <div class="section">
+                <div class="top">
+                    <div class="left" id=1></div>
+                    <div class="middle" id=2></div>
+                    <div class="right" id=3></div>
+                </div>
+                <div class="center">
+                    <div class="left" id=4></div>
+                    <div class="middle" id=5></div>
+                    <div class="right" id=6></div>
+                </div>
+                <div class="bottom">
+                    <div class="left" id=7></div>
+                    <div class="middle" id=8></div>
+                    <div class="right" id=9></div>
+                </div>
+            </div>  
+        </div>
+    {% endif %}
+{% endblock %}
+    
+{% block script %}
+    {% load static %}
+    {% if computer %}  
+        <script src="{% static 'tic_tac_toe_app/computer.js' %}"></script>
+    {% else %}
+        <script src="{% static 'tic_tac_toe_app/test.js' %}"></script>
+    {% endif %}
+{% endblock %}
+
+
+    
+
