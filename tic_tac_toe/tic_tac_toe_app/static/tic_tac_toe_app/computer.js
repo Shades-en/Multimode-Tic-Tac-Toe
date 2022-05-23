@@ -53,14 +53,28 @@ var buttonText = document.createTextNode("Play as O");
 button.appendChild(buttonText);
 char.appendChild(button)
 
+turn.textContent="Your letter is X";
+
 button.addEventListener("click", function(){
-    if(player_1){
-        player_1=false;
-        button.textContent="Play as X";
-    }
-    else if(!player_1){
+    if(!player_1){
+        turn.textContent="Your letter is X";
         player_1=true;
         button.textContent="Play as O";
+        count=0;
+        for(i=1;i<=9;i++){
+            if(document.getElementById(i).textContent!=""){
+                document.getElementById(i).textContent="";
+            }
+        }
+    }
+    else if(player_1){
+        turn.textContent="Your letter is O";
+        player_1=false;
+        button.textContent="Play as X";
+        index=indexing();
+        document.getElementById(index).textContent="x";
+        usedIndex.push(index);
+        count++;
     }
 });
 
@@ -68,27 +82,16 @@ button.addEventListener("click", function(){
 
 let usedIndex=[];
 
-if(!player_1){
-    index=indexing();
-    document.getElementById(index).textContent="x";
-    usedIndex.push(index);
-    count++;
-}
-
-
 for(i=0;i<left_cells.length;i++){
     left_cells[i].addEventListener('click',func);
     middle_cells[i].addEventListener('click',func);
     right_cells[i].addEventListener('click',func);
 }
 
-
-
 function func(){
     button.disabled=true;
     if(event.target.textContent===""){
-        if(player_1){
-            turn.textContent="No Abusing";
+        if(player_1){                   ///////////playing as X
             var entry="x";
             event.target.textContent=entry;
             var hitId=parseInt(event.target.id);
@@ -98,8 +101,7 @@ function func(){
                 win(entry);
             }
         }   
-        else if(!player_1){
-            turn.textContent="No Abusing";
+        else if(!player_1){                /////////playing as O
             var entry="o";
             event.target.textContent=entry;
             var hitId=parseInt(event.target.id);
@@ -111,7 +113,6 @@ function func(){
         }
         if(count>=9){
             if(turn.textContent!="Player One has Won"){
-                console.log(2)
                 turn.textContent="Draw";
                 section.textContent="Refresh to play again";
             }
@@ -133,9 +134,13 @@ function computerTurn(hitId, entry){
     index=indexing();
     usedIndex.push(index);
     count=count+2;
+    if(entry=="x")
+        var compEntry="o";
+    else
+        var compEntry="x";
     for(i=1;i<=9;i++){
         if(document.getElementById(i).textContent===""){
-            document.getElementById(i).textContent="x";
+            document.getElementById(i).textContent=compEntry;
             if(win("check")){
                 document.getElementById(i).textContent=entry;
                 return;
@@ -164,10 +169,10 @@ function  win(entry){
         if(entry==="check"){
             return true;
         }
-        if((entry==="x" || entry==="o") && player_1){
+        if((entry==="x" && player_1) || (entry==="o" && !player_1)){
             turn.textContent="You Won";
         }
-        else if((entry==="x" || entry==="o") && !player_1){
+        else if((entry==="o" && player_1) || (entry==="x" && !player_1)){
             turn.textContent="Computer has won";
         }
         section.textContent="Refresh to play again";
