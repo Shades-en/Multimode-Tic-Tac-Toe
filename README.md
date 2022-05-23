@@ -16,7 +16,7 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 
 ```bash
 git clone [https://github.com/Shades-en/Multimode-Tic-Tac-Toe.git]
-cd Multimode-Tic-Tac-Toe/tic_tac_toe
+cd Multimode-Tic-Tac-Toe\tic_tac_toe
 pip install -r requirements.txt
 ```
 
