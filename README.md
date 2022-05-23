@@ -1,6 +1,6 @@
 <h1  align="center">Multimode Tic Tac Toe</h1>
 
-<p  align="center">
+<p>
  This provides three modes for the user to play with:
   <ul>
     <li>Himself</li>
